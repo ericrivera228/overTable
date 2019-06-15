@@ -10,17 +10,17 @@ import { OverTableRoutingModule } from './overtable-routing.module';
 import { OvertableComponent } from './overtable/overtable.component';
 
 @NgModule({
-  declarations: [
-    OvertableComponent
-  ],
-  imports: [
-    BrowserModule,
-    BaseRoutesModule,
-    OverTableRoutingModule
-  ],
-  providers: [],
-  bootstrap: [
-    OvertableComponent
-  ]
+declarations: [
+  OvertableComponent
+],
+imports: [
+  BrowserModule,
+  BaseRoutesModule,
+  OverTableRoutingModule
+],
+providers: [],
+bootstrap: [
+  OvertableComponent
+]
 })
 export class FrameworkModule { }
