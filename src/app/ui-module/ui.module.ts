@@ -2,7 +2,13 @@
 import { NgModule } from '@angular/core';
 import { DataTableComponent } from './data-table/data-table.component';
 
+// Shared module imports
+import { MaterialDesignModule } from '@shared';
+
 @NgModule({
+	imports: [
+		MaterialDesignModule
+	],
 	declarations: [
 		DataTableComponent
 	],

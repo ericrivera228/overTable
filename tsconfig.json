@@ -21,6 +21,7 @@
     ],
     "paths": {
       "@base-routes": ["./src/app/framework-module/base-routes/base-routes.module"],
+      "@shared": ["./src/app/shared-module/shared.module"],
       "@ui": ["./src/app/ui-module/ui.module"]
     }
   }

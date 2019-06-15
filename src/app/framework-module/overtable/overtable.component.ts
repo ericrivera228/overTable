@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./overtable.component.css']
 })
 export class OvertableComponent {
-  title = 'overTable';
+	title = 'overTable';
 }

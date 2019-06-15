@@ -1,6 +1,7 @@
 // Angular imports
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // Page module imports
 import { BaseRoutesModule } from '@base-routes';
@@ -15,6 +16,7 @@ declarations: [
 ],
 imports: [
   BrowserModule,
+  BrowserAnimationsModule,
   BaseRoutesModule,
   OverTableRoutingModule
 ],
