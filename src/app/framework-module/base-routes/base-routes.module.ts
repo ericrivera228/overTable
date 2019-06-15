@@ -1,5 +1,7 @@
 // Angular Imports
 import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 // UI module imports
 import { UiModule } from '@ui';
@@ -10,6 +12,8 @@ import { HomeComponent } from './home/home.component';
 
 @NgModule({
 	imports: [
+		CommonModule,
+		RouterModule,
 		UiModule
 	],
 	declarations: [

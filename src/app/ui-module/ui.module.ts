@@ -1,5 +1,6 @@
 // Angular Imports
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 // Shared module imports
 import { MaterialDesignModule } from '@shared';
@@ -10,6 +11,7 @@ import { HamburgerButtonComponent } from './hamburger-button/hamburger-button.co
 
 @NgModule({
 	imports: [
+		CommonModule,
 		MaterialDesignModule
 	],
 	declarations: [
