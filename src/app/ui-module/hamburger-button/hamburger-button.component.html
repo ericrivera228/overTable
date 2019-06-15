@@ -1,0 +1,7 @@
+<button mat-button (click)="onHamburgerButtonClick($event)">
+	<div class="hamburger-icon">
+		<div class="top hamburger-line" [@topLineAnimation] = "componentState" ></div>
+		<div class="middle hamburger-line" [@middleLineAnimation] = "componentState"></div>
+		<div class="bottom hamburger-line" [@bottomLineAnimation] = "componentState"></div>
+	</div>
+</button>
