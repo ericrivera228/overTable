@@ -18,6 +18,9 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@base-routes": ["./src/app/frameworkModule/base-routes/base-routes.module"]
+    }
   }
 }
