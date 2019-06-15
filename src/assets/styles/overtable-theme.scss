@@ -1,0 +1,18 @@
+@import '../../../node_modules/@angular/material/theming';
+@import './theme-passthrough.scss';
+
+@include mat-core();
+
+$overtable-theme-primary: mat-palette($mat-blue-gray, 800, 500, 900);
+$overtable-theme-accent: mat-palette($mat-deep-orange, 500, 200, 800);
+$overtable-theme-warn: mat-palette($mat-red);
+
+$overtable-theme: mat-light-theme($overtable-theme-primary, $overtable-theme-accent, $overtable-theme-warn);
+
+@mixin overtable-components($theme) {
+	// Future component mix-ins will go here
+}
+
+@include angular-material-theme($overtable-theme);
+@include overtable-components($overtable-theme);
+@include theme-passthrough($overtable-theme);

@@ -1,0 +1,32 @@
+/**
+ * This stylesheet creates css variables for the theme colors, so that components can programmatically get the
+ * values.
+ */
+
+@include mat-core();
+
+//Prefix string for custom CSS properties
+$prefix: "--"; 
+
+//Merges a variable name with $prefix
+@function custom-property-name($name) {
+    @return $prefix + $name;
+}
+
+// Defines a custom property
+@mixin define-custom-property($name, $value) {
+    #{custom-property-name($name)}: $value;
+}
+
+@mixin theme-passthrough($theme){
+
+	body {
+
+		// Create a CSS variable for each of the three base colors
+	    @include define-custom-property('primary-color', mat-color(map-get($overtable-theme, primary), 1));
+	    @include define-custom-property('accent-color', mat-color(map-get($overtable-theme, accent), 1));
+	    @include define-custom-property('warn-color', mat-color(map-get($overtable-theme, warn), 1));
+
+	}
+
+}

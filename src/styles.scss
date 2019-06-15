@@ -1,1 +1,6 @@
-@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+/**
+ * This file has to exist for the material components to work. Not actually using it for anything, just importing the theme
+ * file.
+ */
+
+@import './assets/styles/overtable-theme.scss';

@@ -1,3 +1,4 @@
+// Angular imports
 import { Component, OnInit } from '@angular/core';
 
 @Component({
