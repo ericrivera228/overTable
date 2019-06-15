@@ -20,7 +20,7 @@
       "dom"
     ],
     "paths": {
-      "@base-routes": ["./src/app/frameworkModule/base-routes/base-routes.module"]
+      "@base-routes": ["./src/app/framework-module/base-routes/base-routes.module"]
     }
   }
 }
