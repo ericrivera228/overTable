@@ -53,7 +53,7 @@ export class DataTableComponent extends BaseComponent implements OnInit, AfterVi
 	 * the table will update to display the provided data.
 	 */
 	@Input()
-	set dataObservable(dataObservable: Observable<string[][]>) {
+	set dataObservable(dataObservable: Observable<any[][]>) {
 
 		// parameter verification
 		if (dataObservable == null) {

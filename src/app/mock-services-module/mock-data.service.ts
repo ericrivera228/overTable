@@ -20,8 +20,8 @@ export class MockDataService {
 
 	constructor() { }
 
-	get basicTableData(): Observable<HttpResult<string[][]>> {
-		return of(new HttpResult<string[][]>(MockData.basicTableData, null));
+	get basicTableData(): Observable<HttpResult<any[][]>> {
+		return of(new HttpResult<any[][]>(MockData.basicTableData, null));
 	}
 
 }
