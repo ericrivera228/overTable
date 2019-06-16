@@ -1,6 +1,6 @@
 // Angular imports
-import { Component, Input, OnInit } from '@angular/core';
-import { MatTableDataSource, MatRow } from '@angular/material';
+import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { MatTableDataSource, MatRow, MatSort } from '@angular/material';
 import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
 // rxjs imports
@@ -20,7 +20,7 @@ import { MockDataService } from '@mock-services';
 		AppTriggers.tableFadeInOut
 	]
 })
-export class DataTableComponent extends BaseComponent implements OnInit {
+export class DataTableComponent extends BaseComponent implements OnInit, AfterViewInit {
 
 	// private variables
 	private _dataSubscriptionIndex: number = null;
@@ -32,6 +32,9 @@ export class DataTableComponent extends BaseComponent implements OnInit {
 
 	// public variables
 	loading = true;
+
+	@ViewChildren(MatSort)
+	public sort: QueryList<MatSort>;
 
 	/**
 	 * Specifies how many columns to show in the ghost table while the data is loading.
@@ -97,6 +100,26 @@ export class DataTableComponent extends BaseComponent implements OnInit {
 	}
 
 	ngOnInit() {
+
+		// Special handling for sorting, since data is just strings instead of objects
+		this._tableData.sortingDataAccessor = (item, property) => {
+			return item[this._headers.indexOf(property)];
+		};
+
+	}
+
+	ngAfterViewInit() {
+
+		// The sort object doesn't always exist - whenever it is created attach it to the
+		// data source object
+		this.autoscribe(this.sort.changes, () => {
+
+			// There will only ever be one object in this list; can assume its the proper one
+			if (this.sort.length > 0) {
+				this._tableData.sort = this.sort.first;
+			}
+
+		});
 
 	}
 

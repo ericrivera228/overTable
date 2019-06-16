@@ -8,16 +8,19 @@ import { NgModule } from '@angular/core';
 
 import {
 	MatButtonModule,
+	MatSortModule,
 	MatTableModule
 } from '@angular/material';
 
 @NgModule({
 	imports: [
 		MatButtonModule,
+		MatSortModule,
 		MatTableModule
 	],
 	exports: [
 		MatButtonModule,
+		MatSortModule,
 		MatTableModule
 	]
 })
