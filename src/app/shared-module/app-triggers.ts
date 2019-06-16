@@ -2,7 +2,7 @@
 import { query, stagger, style, transition, trigger} from '@angular/animations';
 
 // Share module imports
-import { AppAnimations } from '@shared';
+import { AppAnimations } from './app-animations';
 
 export class AppTriggers {
 
