@@ -8,6 +8,7 @@
 		*ngIf="!loading"
 		mat-table
 		matSort
+		multiTemplateDataRows
 		[dataSource]="tableData"
 		[@tableFadeInOut]>
 
@@ -19,13 +20,40 @@
 
 		</ng-container>
 
+		<ng-container matColumnDef="expandedDetail">
+
+			<td mat-cell *matCellDef="let row" [attr.colspan]="headers.length">
+
+				<div class = "row-detail"
+					[@detailExpand]="getRowState(row)">
+
+					<span>{{row}}</span>
+
+				</div>
+
+			</td>
+
+		</ng-container>
+
 		<!-- Render the header row -->
 		<tr mat-header-row *matHeaderRowDef="headers; sticky: true"></tr>
 
 		<!-- Render each row in the table -->
-		<tr mat-row *matRowDef="let row; columns: headers"></tr>
+		<tr mat-row
+			[class.expanded-row] = "isRowExpanded(row)"
+			(click) = "onRowClick(row)"
+			class="table-row"
+			*matRowDef="let row; columns: headers">
+		</tr>
+
+		<tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-tr"></tr>
 	  
 	</table>
+
+	<mat-paginator
+		*ngIf="showPaginator"
+		[pageSizeOptions]="[10, 25, 100]">
+	</mat-paginator>
 
 	<!-- Content to show while the table is loading -->
 	<ot-ghost-table 

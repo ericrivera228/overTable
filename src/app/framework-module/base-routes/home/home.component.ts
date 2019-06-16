@@ -25,7 +25,7 @@ export class HomeComponent extends BaseComponent implements OnInit {
 
 	ngOnInit() {
 
-		this.autoscribe(this.mockDataService.bigBasicTableData, result => {
+		this.autoscribe(this.mockDataService.basicTableData, result => {
 
 			// Put this in a timeout to ensure ensure the view has been set up
 			setTimeout(() => { this.dataSubject.next(result.value); });

@@ -8,6 +8,7 @@ import { NgModule } from '@angular/core';
 
 import {
 	MatButtonModule,
+	MatPaginatorModule,
 	MatSortModule,
 	MatTableModule
 } from '@angular/material';
@@ -15,11 +16,13 @@ import {
 @NgModule({
 	imports: [
 		MatButtonModule,
+		MatPaginatorModule,
 		MatSortModule,
 		MatTableModule
 	],
 	exports: [
 		MatButtonModule,
+		MatPaginatorModule,
 		MatSortModule,
 		MatTableModule
 	]
