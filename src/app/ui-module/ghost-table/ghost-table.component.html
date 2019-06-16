@@ -1,7 +1,7 @@
 <div class="ghost-table-wrapper">
 
 	<!-- Render out a ghost header row -->
-	<tr class="ghost-row ghost-header">
+	<tr class="ghost-row ghost-header fade-row">
 
 		<div class= "ghost-cell" *ngFor="let dummy of ' '.repeat(numberOfColumns).split('')">
 			<span class="ghost-item"></span>
@@ -10,7 +10,7 @@
 	</tr>
 
 	<!-- Render out some ghosty rows -->
-	<tr class="ghost-row" *ngFor="let dummy of ' '.repeat(numberOfRows).split('')">
+	<tr class="ghost-row fade-row" *ngFor="let dummy of ' '.repeat(numberOfRows).split('')">
 
 		<div class="ghost-cell" *ngFor="let dummy of ' '.repeat(numberOfColumns).split('')">
 			<span class="ghost-item"></span>
