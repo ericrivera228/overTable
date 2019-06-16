@@ -19,20 +19,6 @@ export class HomeComponent extends BaseComponent implements OnInit {
 
 	dataSubject = new Subject<string[][]>();
 
-	/**
-	 * Specify how many ghost columns to show in the data table being displayed
-	 */
-	get numberOfGhostColumns() {
-		return MockData.basicTableData[0].length;
-	}
-
-	/**
-	 * Specify how many ghost row to show in the data table being displayed
-	 */
-	get numberOfGhostRows() {
-		return MockData.basicTableData.length;
-	}
-
 	constructor(private mockDataService: MockDataService) {
 		super();
 	}
