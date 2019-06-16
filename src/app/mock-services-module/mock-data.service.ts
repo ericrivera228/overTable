@@ -26,12 +26,11 @@ export class MockDataService {
 
 	/**
 	 * Returns a big array data
-	 * @return {Observable} [description]
 	 */
 	get bigBasicTableData(): Observable<HttpResult<any[][]>> {
 
 		// Base data set to work with
-		let baseData = MockData.basicTableData;
+		const baseData = MockData.basicTableData;
 
 		// Splice out the header, that only needs to be added once
 		let multipliedData = baseData.splice(0, 1);

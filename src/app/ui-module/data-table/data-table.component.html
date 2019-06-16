@@ -20,7 +20,7 @@
 		</ng-container>
 
 		<!-- Render the header row -->
-		<tr mat-header-row *matHeaderRowDef="headers"></tr>
+		<tr mat-header-row *matHeaderRowDef="headers; sticky: true"></tr>
 
 		<!-- Render each row in the table -->
 		<tr mat-row *matRowDef="let row; columns: headers"></tr>
