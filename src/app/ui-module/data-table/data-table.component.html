@@ -28,7 +28,8 @@
 			<td mat-cell *matCellDef="let row" [attr.colspan]="headers.length">
 
 				<div class = "row-detail"
-					[@detailExpand]="getRowState(row)">
+					[@detailExpand]="getRowState(row)"
+					(@detailExpand.done)="onDetailExpandDone($event)">
 					<span>{{row}}</span>
 				</div>
 

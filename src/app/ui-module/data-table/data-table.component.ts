@@ -29,7 +29,7 @@ export const EXPANSION_LENGTH = 225;
 	animations: [
 		AppTriggers.tableFadeInOut,
 		trigger('detailExpand', [
-			state('collapsed', style({height: '0px', minHeight: '0'})),
+			state('collapsed, void', style({height: '0px', minHeight: '0'})),
 			state('expanded', style({height: '*'})),
 			transition(`${TABLE_ROW_STATES.Expanded} <=> ${TABLE_ROW_STATES.Collapsed}`, animate(`${EXPANSION_LENGTH}${TIME_UNIT} cubic-bezier(0.4, 0.0, 0.2, 1)`))
 		]),
@@ -40,14 +40,13 @@ export class DataTableComponent extends BaseComponent implements OnInit, AfterVi
 	// private variables
 	private _dataSubscriptionIndex: number = null;
 	private _expandedRow: string[] = null;
+	private _turnOnLoadingAfterRowCollapse: boolean = false;
 
 	// property backing variables
 	private _dataObservable: Observable<string[][]>;
 	private _headers: string[];
+	private _loading: boolean = true;
 	private _tableData = new MatTableDataSource<string[]>();
-
-	// public variables
-	loading = true;
 
 	@ViewChildren(MatSort)
 	public sort: QueryList<MatSort>;
@@ -113,8 +112,31 @@ export class DataTableComponent extends BaseComponent implements OnInit, AfterVi
 		return this._headers;
 	}
 
+	get loading(): boolean {
+		return this._loading;
+	}
+
+	set loading(val: boolean) {
+
+		// If one of the rows is expanded, collapse it, then turn on loading when the animation is completed
+		if (!(this._expandedRow == null)) {
+
+			// Collapse the expanded row
+			this._expandedRow = null;
+
+			// Defer setting the loading flag to the callback function for when the animation is done
+			this._turnOnLoadingAfterRowCollapse = true;
+
+		} else {
+
+			// All rows collapse - safe to turn on loading
+			this._loading = val;
+		}
+
+	}
+
 	get showPaginator(): boolean {
-		return !this.loading && this.enablePaginator;
+		return !this._loading && this.enablePaginator;
 	}
 
 	/**
@@ -184,6 +206,21 @@ export class DataTableComponent extends BaseComponent implements OnInit, AfterVi
 		this._tableData.data = data.sort((a, b) => {
 			return this.compare(a[index], b[index], sort.direction === 'asc');
 		});
+
+	}
+
+	/**
+	 * Handler for when the 'detailExpand' animation trigger completes
+	 */
+	onDetailExpandDone(evt: Event) {
+
+		// If loading was deferred to this function, turn on the loading flag
+		if (this._turnOnLoadingAfterRowCollapse) {
+
+			this._loading = true;
+
+			this._turnOnLoadingAfterRowCollapse = false;
+		}
 
 	}
 
