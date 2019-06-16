@@ -1,11 +1,17 @@
 .data-table-wrapper{
 	background-color: white;
+	position: relative;
 }
 
-table{
+table,
+ot-ghost-table{
 	width: 100%;
 }
 
 button{
 	margin-bottom: 20px;
+}
+
+ot-ghost-table{
+	display: block;
 }

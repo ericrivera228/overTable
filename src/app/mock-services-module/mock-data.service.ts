@@ -8,7 +8,7 @@ import { Observable, of } from 'rxjs';
 import { HttpResult } from '@shared';
 
 //  Raw data for this service to return
-import * as md from './mock-data';
+import { MockData } from './mock-data';
 
 /**
  * Convenient service for providing fake data.
@@ -21,7 +21,7 @@ export class MockDataService {
 	constructor() { }
 
 	get basicTableData(): Observable<HttpResult<string[][]>> {
-		return of(new HttpResult<string[][]>(md.basicTableData, null));
+		return of(new HttpResult<string[][]>(MockData.basicTableData, null));
 	}
 
 }

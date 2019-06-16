@@ -1,0 +1,65 @@
+$base-color: rgba(221, 221, 221, 0.863);
+$ghost-color: #ecebebf1;
+$animation-duration: 1000ms; 
+$gradient-offset: 52 + 16; 
+
+@mixin background-gradient { 
+  background-image: linear-gradient(90deg, $base-color 0px, $ghost-color 40px, $base-color 80px);
+  background-size: 80vw;
+}
+
+// This should probably be redone; I don't really understand how this animations works, or why it
+// needs vw. But it works for now
+@keyframes ghost-lines { 
+  0%   { background-position: -100px;  }
+  80%  { background-position: 40vw;    }
+  100% { background-position: 60vw;    }
+}
+
+@mixin animate-ghost-line {
+  @include background-gradient;
+  animation: ghost-lines $animation-duration infinite linear;
+}
+
+.ghost-table-wrapper{
+	width: 100%;
+}
+
+.ghost-item{
+	@include animate-ghost-line;
+}
+
+.ghost-row.ghost-header{
+  height: 56px;
+  display: flex;
+}
+
+.ghost-row{
+  height: 48px;
+  display: flex;
+}
+
+.ghost-header .ghost-cell .ghost-item{
+  width: 40%;
+  height: 18px;
+}
+
+.ghost-cell{
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  flex-basis: 0%;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.ghost-item{
+  width: 80%;
+  height: 18px;
+  display: inline-block;
+  border-radius: 10px;
+}
+
+.ghost-cell:first-child{
+	padding-left: 24px;
+}

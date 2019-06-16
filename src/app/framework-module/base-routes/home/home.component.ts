@@ -8,7 +8,7 @@ import { Observable, Subject } from 'rxjs';
 import { BaseComponent } from '@shared';
 
 // Mock service imports
-import { MockDataService } from '@mock-services';
+import { MockDataService, MockData } from '@mock-services';
 
 @Component({
   selector: 'ot-home',
@@ -19,13 +19,27 @@ export class HomeComponent extends BaseComponent implements OnInit {
 
 	dataSubject = new Subject<string[][]>();
 
-	constructor(private mockData: MockDataService) {
+	/**
+	 * Specify how many ghost columns to show in the data table being displayed
+	 */
+	get numberOfGhostColumns() {
+		return MockData.basicTableData[0].length;
+	}
+
+	/**
+	 * Specify how many ghost row to show in the data table being displayed
+	 */
+	get numberOfGhostRows() {
+		return MockData.basicTableData.length;
+	}
+
+	constructor(private mockDataService: MockDataService) {
 		super();
 	}
 
 	ngOnInit() {
 
-		this.autoscribe(this.mockData.basicTableData, result => {
+		this.autoscribe(this.mockDataService.basicTableData, result => {
 
 			// Put this in a timeout to ensure ensure the view has been set up
 			setTimeout(() => { this.dataSubject.next(result.value); });

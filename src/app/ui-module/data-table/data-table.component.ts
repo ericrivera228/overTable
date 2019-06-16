@@ -7,7 +7,7 @@ import { animate, query, stagger, style, transition, trigger } from '@angular/an
 import { Observable, Subscription } from 'rxjs';
 
 // Shared module imports
-import { AppAnimations, BaseComponent } from '@shared';
+import { AppTriggers, BaseComponent } from '@shared';
 
 // Mock service imports
 import { MockDataService } from '@mock-services';
@@ -17,14 +17,7 @@ import { MockDataService } from '@mock-services';
 	templateUrl: './data-table.component.html',
 	styleUrls: ['./data-table.component.scss'],
 	animations: [
-		trigger('animateTable', [
-			transition(':enter', [
-				query('tr', [
-					style({ opacity: 0 }),
-				]),
-				query('tr', stagger('25ms', AppAnimations.fadeIn))
-			])
-		])
+		AppTriggers.tableFadeInOut
 	]
 })
 export class DataTableComponent extends BaseComponent implements OnInit {
@@ -39,6 +32,18 @@ export class DataTableComponent extends BaseComponent implements OnInit {
 
 	// public variables
 	loading = true;
+
+	/**
+	 * Specifies how many columns to show in the ghost table while the data is loading.
+	 */
+	@Input()
+	numberOfGhostColumns: number;
+
+	/**
+	 * Specifies how many rows to show in the ghost table while the data is loading.
+	 */
+	@Input()
+	numberOfGhostRows: number;
 
 	/**
 	 * Observable of data to be displayed in the table. This table will subscrube to this observable. Whenever it fires,

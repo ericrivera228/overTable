@@ -8,7 +8,7 @@
 		*ngIf="!loading"
 		mat-table
 		[dataSource]="tableData"
-		[@animateTable]>
+		[@tableFadeInOut]>
 
 		<!-- Loop through each of the columns - create a column definition -->
 		<ng-container *ngFor="let header of headers; let colIndex = index;" [matColumnDef]="header">
@@ -27,8 +27,10 @@
 	</table>
 
 	<!-- Content to show while the table is loading -->
-	<ng-container *ngIf="loading">
-		<span>Please hold! Loading data for this table!</span>
-	</ng-container>
+	<ot-ghost-table 
+		[numberOfColumns] = "numberOfGhostColumns"
+		[numberOfRows] = "numberOfGhostRows"
+		*ngIf="loading">
+	</ot-ghost-table>
 
 </div>

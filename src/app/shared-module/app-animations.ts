@@ -15,4 +15,11 @@ export class AppAnimations {
 		}))
 	];
 
+	static readonly fadeOut: AnimationMetadata[] = [
+		style({ opacity: 1 }),
+		animate(`${AppAnimations.fadeLength}${AppAnimations.timeUnit}`, style({
+			opacity: 0
+		}))
+	];
+
 }

@@ -2,6 +2,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
 // Mock service module imports
+import { MockData } from './mock-data';
 import { MockDataService } from './mock-data.service';
 
 @NgModule({
@@ -14,4 +15,5 @@ import { MockDataService } from './mock-data.service';
 export class MockServiceModule { }
 
 // Export components that belong to this module
+export { MockData } from './mock-data';
 export { MockDataService } from './mock-data.service';
