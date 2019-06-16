@@ -1,4 +1,5 @@
 // Shared module imports
+import { AppAnimations } from './app-animations';
 import { BaseComponent } from './base-component';
 import { HttpMessage } from './http/http-message';
 import { HttpMessageType } from './http/http-message-type';
@@ -7,6 +8,7 @@ import { MaterialDesignModule } from './material-design.module';
 import { ScssConduit } from './scssConduit';
 
 // Export components that belong to this module
+export { AppAnimations } from './app-animations';
 export { BaseComponent } from './base-component';
 export { HttpMessage } from './http/http-message';
 export { HttpMessageType } from './http/http-message-type';

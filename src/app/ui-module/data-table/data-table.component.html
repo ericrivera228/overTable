@@ -1,4 +1,13 @@
-<table mat-table [dataSource]="tableData" class="mat-elevation-z8">
+<div>
+	<button (click)="loading = !loading" mat-flat-button color="primary">Toggle loading</button>	
+</div>
+
+<table
+	*ngIf="!loading"
+	mat-table
+	[dataSource]="tableData"
+	[@animateTable] 
+	class="mat-elevation-z8">
 
 	<!-- Loop through each of the columns - create a column definition -->
 	<ng-container *ngFor="let header of headers; let colIndex = index;" [matColumnDef]="header">
@@ -12,6 +21,11 @@
 	<tr mat-header-row *matHeaderRowDef="headers"></tr>
 
 	<!-- Render each row in the table -->
-	<tr mat-row *matRowDef="let row; columns: headers;"></tr>
+	<tr mat-row *matRowDef="let row; columns: headers"></tr>
   
 </table>
+
+<!-- Content to show while the table is loading -->
+<ng-container *ngIf="loading">
+	<span>Please hold! Loading data for this table!</span>
+</ng-container>

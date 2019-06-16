@@ -1,20 +1,31 @@
 // Angular imports
 import { Component, Input, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatRow } from '@angular/material';
+import { animate, query, stagger, style, transition, trigger } from '@angular/animations';
 
 // rxjs imports
 import { Observable, Subscription } from 'rxjs';
 
 // Shared module imports
-import { BaseComponent } from '@shared';
+import { AppAnimations, BaseComponent } from '@shared';
 
 // Mock service imports
 import { MockDataService } from '@mock-services';
 
 @Component({
-  selector: 'ot-data-table',
-  templateUrl: './data-table.component.html',
-  styleUrls: ['./data-table.component.scss']
+	selector: 'ot-data-table',
+	templateUrl: './data-table.component.html',
+	styleUrls: ['./data-table.component.scss'],
+	animations: [
+		trigger('animateTable', [
+			transition(':enter', [
+				query('tr', [
+					style({ opacity: 0 }),
+				]),
+				query('tr', stagger('25ms', AppAnimations.fadeIn))
+			])
+		])
+	]
 })
 export class DataTableComponent extends BaseComponent implements OnInit {
 
@@ -25,6 +36,9 @@ export class DataTableComponent extends BaseComponent implements OnInit {
 	private _dataObservable: Observable<string[][]>;
 	private _headers: string[];
 	private _tableData = new MatTableDataSource<string[]>();
+
+	// public variables
+	loading = true;
 
 	/**
 	 * Observable of data to be displayed in the table. This table will subscrube to this observable. Whenever it fires,
@@ -92,6 +106,9 @@ export class DataTableComponent extends BaseComponent implements OnInit {
 
 		// Add the rest of the data to the data source
 		this._tableData.data = data;
+
+		// Show the data!
+		this.loading = false;
 
 	}
 
