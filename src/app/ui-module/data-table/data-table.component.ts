@@ -1,7 +1,8 @@
 // Angular imports
 import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatRow, MatSort } from '@angular/material';
-import { animate, query, stagger, state, style, transition, trigger } from '@angular/animations';
+import { Sort } from '@angular/material/sort';
+import { animate, query, stagger, state, style, transition, trigger, AnimationEvent } from '@angular/animations';
 
 // rxjs imports
 import { Observable, Subscription } from 'rxjs';
@@ -30,7 +31,7 @@ export const EXPANSION_LENGTH = 225;
 		trigger('detailExpand', [
 			state('collapsed', style({height: '0px', minHeight: '0'})),
 			state('expanded', style({height: '*'})),
-			transition(`${TABLE_ROW_STATES.Expanded} <=> ${TABLE_ROW_STATES.Collapsed}`, animate(`${EXPANSION_LENGTH}${TIME_UNIT} cubic-bezier(0.4, 0.0, 0.2, 1)`)),
+			transition(`${TABLE_ROW_STATES.Expanded} <=> ${TABLE_ROW_STATES.Collapsed}`, animate(`${EXPANSION_LENGTH}${TIME_UNIT} cubic-bezier(0.4, 0.0, 0.2, 1)`))
 		]),
 	]
 })
@@ -127,14 +128,7 @@ export class DataTableComponent extends BaseComponent implements OnInit, AfterVi
 		super();
 	}
 
-	ngOnInit() {
-
-		// Special handling for sorting, since data is just strings instead of objects
-		this._tableData.sortingDataAccessor = (item, property) => {
-			return item[this._headers.indexOf(property)];
-		};
-
-	}
+	ngOnInit() { }
 
 	ngAfterViewInit() {
 		this.subscribeToTableObjects();
@@ -167,6 +161,33 @@ export class DataTableComponent extends BaseComponent implements OnInit, AfterVi
 	}
 
 	/**
+	 * Custom sorting method for the matSort object. Using the built in MatSort caused a bug where sorting a
+	 * column would expand rows, seemingly at random. Implementing a custom sort fixed this.
+	 */
+	sortData(sort: Sort) {
+
+		// If sorting was turned off, or a direction wasn't provided, nothing to do
+		if (!sort.active || sort.direction === '') {
+			return;
+		}
+
+		// Store the data in a temporary place, so the original array can be cleared
+		const data = this._tableData.data;
+
+		// Determine the index of the column being sorted
+		const index = this._headers.indexOf(sort.active);
+
+		// Clear out the data - needed to fix a weird bug where sorting a column would make all the rows expand
+		this._tableData.data = [];
+
+		// Sort the data
+		this._tableData.data = data.sort((a, b) => {
+			return this.compare(a[index], b[index], sort.direction === 'asc');
+		});
+
+	}
+
+	/**
 	 * The sort and paginators objects don't always exists. So, whenever they are created, attach
 	 * them to the data source object.
 	 */
@@ -180,6 +201,7 @@ export class DataTableComponent extends BaseComponent implements OnInit, AfterVi
 			} else {
 				this._tableData.sort = null;
 			}
+
 
 		});
 
@@ -211,6 +233,13 @@ export class DataTableComponent extends BaseComponent implements OnInit, AfterVi
 		// Show the data!
 		this.loading = false;
 
+	}
+
+	/**
+	 * Function for comparing various data types.
+	 */
+	private compare(a: number | string, b: number | string, isAsc: boolean) {
+	  return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 	}
 
 }

@@ -8,6 +8,7 @@
 		*ngIf="!loading"
 		mat-table
 		matSort
+		(matSortChange)="sortData($event)"
 		multiTemplateDataRows
 		[dataSource]="tableData"
 		[@tableFadeInOut]>
@@ -20,15 +21,15 @@
 
 		</ng-container>
 
+		<!-- Column definition for the expanded part of the row -->
 		<ng-container matColumnDef="expandedDetail">
 
+			<!-- Table cell that spans the entire table - this is where the expanded content lives -->
 			<td mat-cell *matCellDef="let row" [attr.colspan]="headers.length">
 
 				<div class = "row-detail"
 					[@detailExpand]="getRowState(row)">
-
 					<span>{{row}}</span>
-
 				</div>
 
 			</td>
@@ -38,7 +39,7 @@
 		<!-- Render the header row -->
 		<tr mat-header-row *matHeaderRowDef="headers; sticky: true"></tr>
 
-		<!-- Render each row in the table -->
+		<!-- Add each row to the table -->
 		<tr mat-row
 			[class.expanded-row] = "isRowExpanded(row)"
 			(click) = "onRowClick(row)"
@@ -46,6 +47,7 @@
 			*matRowDef="let row; columns: headers">
 		</tr>
 
+		<!-- Add the expanded row to the table -->
 		<tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="detail-tr"></tr>
 	  
 	</table>
