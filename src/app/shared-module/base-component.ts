@@ -1,9 +1,12 @@
 // Angular imports
-import { OnDestroy } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
 // rxjs imports
 import { Observable, zip } from 'rxjs';
 
+@Component({
+	template: ''
+})
 export abstract class BaseComponent implements OnDestroy {
 
 	// List of all the subscriptions this component has autoscribed to
