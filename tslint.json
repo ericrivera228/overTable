@@ -94,8 +94,5 @@
         "check-format",
         "allow-leading-underscore"
     ]
-  },
-  "rulesDirectory": [
-    "codelyzer"
-  ]
+  }
 }
