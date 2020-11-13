@@ -1,7 +1,7 @@
 const PREFIX = '--';
 
 /**
- * Class than can be used to get 'communicate' with the scss styles. Useful for say, grabbing the value of the defined theme
+ * Class than can be used to 'communicate' with the scss styles. Useful for say, grabbing the value of the defined theme
  * variabled.
  */
 export class ScssConduit {

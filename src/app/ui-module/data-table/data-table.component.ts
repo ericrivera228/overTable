@@ -73,7 +73,7 @@ export class DataTableComponent extends BaseComponent implements OnInit, AfterVi
 	numberOfGhostRows: number;
 
 	/**
-	 * Observable of data to be displayed in the table. This table will subscrube to this observable. Whenever it fires,
+	 * Observable of data to be displayed in the table. This table will subscribe to this observable. Whenever it fires,
 	 * the table will update to display the provided data.
 	 */
 	@Input()

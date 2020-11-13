@@ -26,7 +26,7 @@ export class GhostTableComponent implements OnInit {
 	numberOfRows: number;
 
 	/**
-	 * The ghost table is typically display with an ngIf. Thus, to get the rows to stagger in\out,
+	 * The ghost table is typically displayed with an ngIf. Thus, to get the rows to stagger in\out,
 	 * the animation trigger needs to be attched to the <ot-ghost-table> tag. This dose that automatically,
 	 * instead of requiring whatever component is hosting the ghost table to do it automatically.
 	 */

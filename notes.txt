@@ -1,0 +1,5 @@
+Other cool data data tables:
+
+List of good data table projects: https://www.ngdevelop.tech/best-angular-tables/
+
+Example of combined infinite scroll + paginator: http://swimlane.github.io/ngx-datatable/#responsive
