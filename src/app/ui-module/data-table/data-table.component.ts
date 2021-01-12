@@ -1,6 +1,6 @@
 // Angular imports
 import { AfterViewInit, Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatRow, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatRow, MatSlideToggleChange, MatSort } from '@angular/material';
 import { Sort } from '@angular/material/sort';
 import { animate, query, stagger, state, style, transition, trigger, AnimationEvent } from '@angular/animations';
 
@@ -39,13 +39,14 @@ export class DataTableComponent extends BaseComponent implements OnInit, AfterVi
 
 	// private variables
 	private _dataSubscriptionIndex: number = null;
-	private _expandedRow: string[] = null;
+	private _expandedRowIndices: number[] = [];
 	private _turnOnLoadingAfterRowCollapse: boolean = false;
 
 	// property backing variables
 	private _dataObservable: Observable<string[][]>;
 	private _headers: string[];
 	private _loading: boolean = true;
+	private _allowMultiExpRow: boolean = true;						// Flag indicating if multiple rows can be expanded simultaneously.
 	private _tableData = new MatTableDataSource<string[]>();
 
 	@ViewChildren(MatSort)
@@ -105,6 +106,10 @@ export class DataTableComponent extends BaseComponent implements OnInit, AfterVi
 
 	}
 
+	get allowMultiExpRow(): boolean {
+		return this._allowMultiExpRow;
+	}
+
 	/**
 	 * @return An Array of strings representing the header of this table.
 	 */
@@ -119,10 +124,10 @@ export class DataTableComponent extends BaseComponent implements OnInit, AfterVi
 	set loading(val: boolean) {
 
 		// If one of the rows is expanded, collapse it, then turn on loading when the animation is completed
-		if (!(this._expandedRow == null)) {
+		if (this._expandedRowIndices.length > 0) {
 
-			// Collapse the expanded row
-			this._expandedRow = null;
+			// Collapse all expanded rows
+			this._expandedRowIndices = [];
 
 			// Defer setting the loading flag to the callback function for when the animation is done
 			this._turnOnLoadingAfterRowCollapse = true;
@@ -159,17 +164,52 @@ export class DataTableComponent extends BaseComponent implements OnInit, AfterVi
 	/**
 	 * Indicates if the given row is currently expanded.
 	 */
-	isRowExpanded(row: string[]): boolean {
-		return this._expandedRow === row;
+	isRowExpanded(rowIndex: number): boolean {
+		return this._expandedRowIndices.includes(rowIndex);
 	}
 
 	/**
 	 * Handler for when a row is clicked.
 	 */
-	onRowClick(row: string[]) {
+	onRowClick(rowIndex: number) {
+
+		// Look for the given index in the list of expanded row indexes
+		let foundIndex = this._expandedRowIndices.indexOf(rowIndex);
 
 		// If the row clicked is alredy expanded, close it. Otherwise, open the new row
-		this._expandedRow = this._expandedRow === row ? null : row;
+		if(foundIndex >= 0){
+			this._expandedRowIndices.splice(foundIndex, 1);
+		} else{
+
+			// If multiple rows can be expanded, add new index to the list. Other, close previously expanded row
+			// and expand the new one
+			this._expandedRowIndices = this._allowMultiExpRow ? [...this._expandedRowIndices, rowIndex ] : [rowIndex];
+
+		}
+
+	}
+
+	onAllowMultiExpRowChange(change: MatSlideToggleChange){
+
+		// Only need to do work if the value changed
+		if(this._allowMultiExpRow !== change.checked){
+
+			this._allowMultiExpRow = change.checked
+
+			// If multiple row expansion was just turned off, and there are multiple expanded rows, 
+			// collapse all but the most recently expanded row
+			if(!change.checked && this._expandedRowIndices.length > 1){
+
+				// Newly expanded rows indices are added to the back of the list, so the most recently expanded 
+				// row will be the last item in the list
+				let lastExpandedRowIndex = this._expandedRowIndices[this._expandedRowIndices.length - 1]
+
+				// Collapse all rows except the most recently expanded
+				this._expandedRowIndices = [lastExpandedRowIndex]
+
+			}
+
+		}
 
 	}
 
@@ -178,8 +218,8 @@ export class DataTableComponent extends BaseComponent implements OnInit, AfterVi
 	 * @return Returns TABLE_ROW_STATES enumeration. 'Expanded' if the row is currently expanded,
 	 * 'Collpased' if otherwise.
 	 */
-	getRowState(row: string[]): string {
-		return row === this._expandedRow ? TABLE_ROW_STATES.Expanded : TABLE_ROW_STATES.Collapsed;
+	getRowState(rowIndex: number): string {
+		return this._expandedRowIndices.includes(rowIndex) ? TABLE_ROW_STATES.Expanded : TABLE_ROW_STATES.Collapsed;
 	}
 
 	/**

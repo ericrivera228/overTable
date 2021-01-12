@@ -1,5 +1,12 @@
 <div>
+
+	<!-- Temp controls for controlling various aspects of the table -->
 	<button (click)="loading = !loading" mat-flat-button color="accent">Toggle loading</button>	
+
+	<div>
+		<mat-slide-toggle ngModel name="allowMultiExpRow" [checked]="allowMultiExpRow" (change)="onAllowMultiExpRowChange($event)" >Allow multiple expanded rows</mat-slide-toggle>
+	</div>
+	
 </div>
 
 <div class="data-table-wrapper mat-elevation-z8">
@@ -25,10 +32,10 @@
 		<ng-container matColumnDef="expandedDetail">
 
 			<!-- Table cell that spans the entire table - this is where the expanded content lives -->
-			<td mat-cell *matCellDef="let row" [attr.colspan]="headers.length">
+			<td mat-cell *matCellDef="let row; let rowIndex = dataIndex" [attr.colspan]="headers.length">
 
 				<div class = "row-detail"
-					[@detailExpand]="getRowState(row)"
+					[@detailExpand]="getRowState(rowIndex)"
 					(@detailExpand.done)="onDetailExpandDone($event)">
 					<span>{{row}}</span>
 				</div>
@@ -42,10 +49,10 @@
 
 		<!-- Add each row to the table -->
 		<tr mat-row
-			[class.expanded-row] = "isRowExpanded(row)"
-			(click) = "onRowClick(row)"
+			[class.expanded-row] = "isRowExpanded(rowIndex)"
+			(click) = "onRowClick(rowIndex)"
 			class="table-row fade-row"
-			*matRowDef="let row; columns: headers">
+			*matRowDef="let row; columns: headers; let rowIndex = dataIndex;">
 		</tr>
 
 		<!-- Add the expanded row to the table -->

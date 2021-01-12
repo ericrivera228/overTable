@@ -9,20 +9,23 @@ import { NgModule } from '@angular/core';
 import {
 	MatButtonModule,
 	MatPaginatorModule,
+	MatSlideToggleModule,
 	MatSortModule,
-	MatTableModule
-} from '@angular/material';
+	MatTableModule,
+} from '@angular/material';	
 
 @NgModule({
 	imports: [
 		MatButtonModule,
 		MatPaginatorModule,
+		MatSlideToggleModule,
 		MatSortModule,
 		MatTableModule
 	],
 	exports: [
 		MatButtonModule,
 		MatPaginatorModule,
+		MatSlideToggleModule,
 		MatSortModule,
 		MatTableModule
 	]
